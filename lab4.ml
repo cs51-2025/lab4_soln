@@ -280,13 +280,14 @@ branch. This is something we're likely to be doing a lot of. Let's
 factor that out to simplify the implementation.
 
 ........................................................................
-Exercise 9: Define a function called `maybe` that takes a function of
-type `'arg -> 'result` and an argument of type `'arg option`, and
-"maybe" applies the function to the argument (depending on whether its
-argument is a `None` or a `Some`). The `maybe` function either passes
-on the `None` if its first argument is `None`, or if its first
-argument is `Some v`, it applies its second argument to that `v` and
-returns the result, appropriately adjusted for the result type.
+Exercise 9: Define a function called `maybe` that takes a first
+argument, function of type `'arg -> 'result`, and a second argument,
+of type `'arg option`, and "maybe" applies the first (the function) to
+the second (the argument), depending on whether its argument is a
+`None` or a `Some`. The `maybe` function either passes on the `None`
+if its second argument is `None`, or if its second argument is `Some
+v`, it applies its first argument to that `v` and returns the result,
+appropriately adjusted for the result type.
 
 What should the type of the `maybe` function be?
 
