@@ -340,3 +340,25 @@ let rec max_list_opt_2 (lst : int list) : int option =
   | head :: tail ->
      maybe (fun max_tail -> max head max_tail)
            (max_list_opt_2 tail) ;;
+
+(* The subtle issue is this. Recall the previous definition of
+   `max_list_opt` above:
+
+	let rec max_list_opt (lst : int list) : int option =
+	  match lst with
+	  | [] -> None
+	  | head :: tail ->
+	     match (max_list_opt tail) with
+	     | None -> Some head
+	     | Some max_tail -> Some (max head max_tail) ;;
+
+   In this version, no special match case is needed for the case of a
+   singleton list. Instead, we can recur all the way to the empty list
+   case, and handle the singleton case in the first case in the
+   embedded match, where the `None` from the recursive call becomes
+   `Some head`. However, when using the `maybe` in the corresponding
+   case in `max_list_opt_2`, we can't allow the recursion to proceed
+   all the way to the empt list, where `None` would be returned,
+   because `maybe` always preserves `None`s; we can't "promote" the
+   `None` to a `Some`. Consequently, we need to handle the singleton
+   case explicitly. *)
